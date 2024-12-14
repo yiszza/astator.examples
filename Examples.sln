@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05.简易悬浮窗", "05.�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06.选项卡", "06.选项卡\06.选项卡.csproj", "{12CAE134-6E7F-4F2F-A3FA-9029F4574ECD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "07.YOLO调用", "07.YOLO调用\07.YOLO调用.csproj", "{177E11E9-10B5-4C54-A226-DD9BF52640E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{12CAE134-6E7F-4F2F-A3FA-9029F4574ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12CAE134-6E7F-4F2F-A3FA-9029F4574ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12CAE134-6E7F-4F2F-A3FA-9029F4574ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{177E11E9-10B5-4C54-A226-DD9BF52640E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{177E11E9-10B5-4C54-A226-DD9BF52640E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{177E11E9-10B5-4C54-A226-DD9BF52640E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{177E11E9-10B5-4C54-A226-DD9BF52640E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net9.0-android;</TargetFrameworks>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<SupportedOSPlatformVersion>26.0</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Astator" Version="0.5.5" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.12" />
+		<PackageReference Include="YoloSharp" Version="6.0.1" />
+	</ItemGroup>
+
+	<ProjectExtensions>
+		<IsObfuscate>true</IsObfuscate>
+		<Label>_07.YOLO调用</Label>
+		<PackageName>com.script._07.YOLO调用</PackageName>
+		<Version>1.0.0</Version>
+	</ProjectExtensions>
+
+</Project>
+
