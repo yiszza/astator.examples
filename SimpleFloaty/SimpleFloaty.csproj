@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-android</TargetFramework>
+    <OutputType>Library</OutputType>
+    <UseMaui>false</UseMaui>
+    <SupportedOSPlatformVersion>26.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Astator" Version="1.0.0-preview1" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <IsObfuscate>true</IsObfuscate>
+    <Label>SimpleFloaty</Label>
+    <PackageName>com.script.SimpleFloaty</PackageName>
+    <Version>1.0.0</Version>
+  </ProjectExtensions>
+</Project>

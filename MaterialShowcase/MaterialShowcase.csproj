@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net9.0-android;</TargetFrameworks>
+    <UseMaui>false</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <SupportedOSPlatformVersion>26.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Astator" Version="1.0.0-preview1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ref\" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <IsObfuscate>true</IsObfuscate>
+    <Label>MaterialShowcase</Label>
+    <PackageName>com.script.MaterialShowcase</PackageName>
+    <Version>1.0.0</Version>
+  </ProjectExtensions>
+</Project>
