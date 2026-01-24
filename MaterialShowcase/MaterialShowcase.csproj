@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net9.0-android;</TargetFrameworks>
+    <TargetFrameworks>net10.0-android;</TargetFrameworks>
     <UseMaui>false</UseMaui>
     <SingleProject>true</SingleProject>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -8,15 +8,28 @@
     <SupportedOSPlatformVersion>26.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Astator" Version="1.0.0-preview1" />
+    <PackageReference Include="Astator" Version="1.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ref\" />
   </ItemGroup>
   <ProjectExtensions>
-    <IsObfuscate>true</IsObfuscate>
     <Label>MaterialShowcase</Label>
     <PackageName>com.script.MaterialShowcase</PackageName>
+    <Author>unknown</Author>
     <Version>1.0.0</Version>
+    <Description>在这里填写关于脚本的描述</Description>
+    <Obfuscator>
+      <IsObfuscate>true</IsObfuscate>
+      <RenameProperties>true</RenameProperties>
+      <RenameEvents>true</RenameEvents>
+      <RenameFields>true</RenameFields>
+      <KeepPublicApi>true</KeepPublicApi>
+      <HidePrivateApi>true</HidePrivateApi>
+      <ReuseNames>true</ReuseNames>
+      <UseUnicodeNames>true</UseUnicodeNames>
+      <UseKoreanNames>false</UseKoreanNames>
+      <HideStrings>true</HideStrings>
+    </Obfuscator>
   </ProjectExtensions>
 </Project>

@@ -1,17 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0-android</TargetFramework>
+    <TargetFramework>net10.0-android</TargetFramework>
     <OutputType>Library</OutputType>
     <UseMaui>false</UseMaui>
     <SupportedOSPlatformVersion>26.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Astator" Version="1.0.0-preview1" />
+    <PackageReference Include="Astator" Version="1.0.2" />
   </ItemGroup>
   <ProjectExtensions>
-    <IsObfuscate>true</IsObfuscate>
     <Label>SimpleFloaty</Label>
     <PackageName>com.script.SimpleFloaty</PackageName>
+    <Author>unknown</Author>
     <Version>1.0.0</Version>
+    <Description>在这里填写关于脚本的描述</Description>
+    <Obfuscator>
+      <IsObfuscate>true</IsObfuscate>
+      <RenameProperties>true</RenameProperties>
+      <RenameEvents>true</RenameEvents>
+      <RenameFields>true</RenameFields>
+      <KeepPublicApi>true</KeepPublicApi>
+      <HidePrivateApi>true</HidePrivateApi>
+      <ReuseNames>true</ReuseNames>
+      <UseUnicodeNames>true</UseUnicodeNames>
+      <UseKoreanNames>false</UseKoreanNames>
+      <HideStrings>true</HideStrings>
+    </Obfuscator>
   </ProjectExtensions>
 </Project>
