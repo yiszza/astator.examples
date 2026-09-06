@@ -10,9 +10,9 @@ using AndroidX.Core.Content;
 using AndroidX.Core.View;
 using AndroidX.DrawerLayout.Widget;
 using AndroidX.ViewPager2.Widget;
-using Astator.Platform.Droid.UI;
-using Astator.Platform.Droid.UI.Base;
 using Astator.Script;
+using Astator.UI;
+using Astator.UI.Base;
 using Google.Android.Material.AppBar;
 using Google.Android.Material.BottomNavigation;
 using Google.Android.Material.Navigation;
@@ -24,10 +24,10 @@ namespace MaterialShowcase;
 
 public class Program
 {
-    private static readonly TaskCompletionSource<bool> tcs = new();
+    private static readonly TaskCompletionSource<object> tcs = new();
 
     [EntryMethod]
-    public static async Task<bool> MainAsync(string workDir)
+    public static async Task<object> MainAsync(string workDir)
     {
         var activity = await TemplateActivity.CreateAsync();
         activity.SetContentViewDelegate(workDir, CreateRoot);
@@ -40,15 +40,15 @@ public class Program
         var activity = (TemplateActivity)ctx;
 
         activity.OnBackPressedCallbacks.Add(activity.Finish);
-        activity.OnFinishedCallbacks.Add(() => tcs.TrySetResult(true));
+        activity.OnFinishedCallbacks.Add(() => tcs.TrySetResult(0));
 
         var assetsDir = Path.Combine(workDir, "assets");
 
         using var tv = new TypedValue();
-        ctx.Theme?.ResolveAttribute(Resource.Attribute.colorOnSurface, tv, true);
+        ctx.Theme?.ResolveAttribute(Astator.Resource.Attribute.colorOnSurface, tv, true);
         var onSurfaceTint = ContextCompat.GetColorStateList(ctx, tv.ResourceId);
 
-        ctx.Theme?.ResolveAttribute(Resource.Attribute.colorSurface, tv, true);
+        ctx.Theme?.ResolveAttribute(Astator.Resource.Attribute.colorSurface, tv, true);
         var backgroundColor = ContextCompat.GetColor(ctx, tv.ResourceId);
 
         activity.SetStatusBarColor(
@@ -72,8 +72,8 @@ public class Program
                                 {
                                     view.Title = "Home";
                                     view.TitleCentered = false;
-                                    view.NavigationIcon = SvgDrawable.FromSvg(
-                                        ctx.Resources,
+                                    view.NavigationIcon = SvgDrawable.FromPath(
+                                        ctx,
                                         Path.Combine(assetsDir, "menu.svg")
                                     );
                                     view.NavigationClick += (s, e) =>
@@ -88,8 +88,8 @@ public class Program
 
                                     view.Menu?.Add(0, 0, 0, "link")!
                                         .SetIcon(
-                                            SvgDrawable.FromSvg(
-                                                ctx.Resources,
+                                            SvgDrawable.FromPath(
+                                                ctx,
                                                 Path.Combine(assetsDir, "link.svg")
                                             )
                                         )
@@ -98,8 +98,8 @@ public class Program
 
                                     view.Menu?.Add(0, 1, 1, "calendar")!
                                         .SetIcon(
-                                            SvgDrawable.FromSvg(
-                                                ctx.Resources,
+                                            SvgDrawable.FromPath(
+                                                ctx,
                                                 Path.Combine(assetsDir, "calendar.svg")
                                             )
                                         )
@@ -108,8 +108,8 @@ public class Program
 
                                     view.Menu?.Add(1, 0, 0, "menu")!
                                         .SetIcon(
-                                            SvgDrawable.FromSvg(
-                                                ctx.Resources,
+                                                SvgDrawable.FromPath(
+                                                    ctx,
                                                 Path.Combine(assetsDir, "menu.svg")
                                             )
                                         )
@@ -203,30 +203,30 @@ public class Program
                                     .SetIcon(
                                         new StateListDrawable()
                                             .AddState(
-                                                SvgDrawable.FromSvg(
-                                                    ctx.Resources,
+                                                SvgDrawable.FromPath(
+                                                    ctx,
                                                     Path.Combine(workDir, "assets", "home_fill.svg")
                                                 ),
                                                 Android.Resource.Attribute.StateChecked
                                             )
                                             .AddState(
-                                                SvgDrawable.FromSvg(
-                                                    ctx.Resources,
+                                                SvgDrawable.FromPath(
+                                                    ctx,
                                                     Path.Combine(assetsDir, "home.svg")
                                                 )
                                             )
                                     );
                                 view.Menu.Add(0, 1, 1, "Music")!
                                     .SetIcon(
-                                        SvgDrawable.FromSvg(
-                                            ctx.Resources,
+                                        SvgDrawable.FromPath(
+                                            ctx,
                                             Path.Combine(assetsDir, "music.svg")
                                         )
                                     );
                                 view.Menu.Add(0, 2, 2, "Podcasts")!
                                     .SetIcon(
-                                        SvgDrawable.FromSvg(
-                                            ctx.Resources,
+                                        SvgDrawable.FromPath(
+                                            ctx,
                                             Path.Combine(assetsDir, "podcasts.svg")
                                         )
                                     );
@@ -234,8 +234,8 @@ public class Program
                                     .SetIcon(
                                         new StateListDrawable()
                                             .AddState(
-                                                SvgDrawable.FromSvg(
-                                                    ctx.Resources,
+                                                SvgDrawable.FromPath(
+                                                    ctx,
                                                     Path.Combine(
                                                         workDir,
                                                         "assets",
@@ -245,8 +245,8 @@ public class Program
                                                 Android.Resource.Attribute.StateChecked
                                             )
                                             .AddState(
-                                                SvgDrawable.FromSvg(
-                                                    ctx.Resources,
+                                                SvgDrawable.FromPath(
+                                                    ctx,
                                                     Path.Combine(assetsDir, "settings.svg")
                                                 )
                                             )
@@ -294,36 +294,36 @@ public class Program
 
                         view.Menu.Add(0, 0, 0, "Inbox")!
                             .SetIcon(
-                                SvgDrawable.FromSvg(
-                                    ctx.Resources,
+                                SvgDrawable.FromPath(
+                                    ctx,
                                     Path.Combine(assetsDir, "inbox.svg")
                                 )
                             );
                         view.Menu.Add(0, 1, 1, "Outbox")!
                             .SetIcon(
-                                SvgDrawable.FromSvg(
-                                    ctx.Resources,
+                                SvgDrawable.FromPath(
+                                    ctx,
                                     Path.Combine(assetsDir, "outbox.svg")
                                 )
                             );
                         view.Menu.Add(0, 2, 2, "Favorites")!
                             .SetIcon(
-                                SvgDrawable.FromSvg(
-                                    ctx.Resources,
+                                SvgDrawable.FromPath(
+                                    ctx,
                                     Path.Combine(assetsDir, "favorites.svg")
                                 )
                             );
                         view.Menu.Add(0, 3, 3, "Trash")!
                             .SetIcon(
-                                SvgDrawable.FromSvg(
-                                    ctx.Resources,
+                                SvgDrawable.FromPath(
+                                    ctx,
                                     Path.Combine(assetsDir, "trash.svg")
                                 )
                             );
                         view.Menu.Add(1, 0, 4, "Label")!
                             .SetIcon(
-                                SvgDrawable.FromSvg(
-                                    ctx.Resources,
+                                SvgDrawable.FromPath(
+                                    ctx,
                                     Path.Combine(assetsDir, "label.svg")
                                 )
                             );

@@ -1,32 +1,32 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Text.Method;
 using Android.Views;
 using Android.Widget;
-using Astator.Platform.Droid.UI;
-using Astator.Platform.Droid.UI.Base;
 using Astator.Script;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Platform;
+using Astator.UI;
+using Astator.UI.Base;
 using static Android.Views.ViewGroup;
 using static Android.Widget.ImageView;
 using Orientation = Android.Widget.Orientation;
+using Path = System.IO.Path;
 
 namespace UIShowcase;
 
 public class Program
 {
-    private static readonly TaskCompletionSource<bool> tcs = new();
+    private static readonly TaskCompletionSource<object> tcs = new();
 
     [EntryMethod]
-    public static async Task<bool> MainAsync(string workDir)
+    public static async Task<object> MainAsync(string workDir)
     {
         var activity = await TemplateActivity.CreateAsync();
 
         activity.OnBackPressedCallbacks.Add(activity.Finish);
-        activity.OnFinishedCallbacks.Add(() => tcs.TrySetResult(true));
+        activity.OnFinishedCallbacks.Add(() => tcs.TrySetResult(0));
 
         activity.SetContentViewDelegate(
             workDir,
@@ -82,7 +82,7 @@ public class Program
                                         new Button(ctx).Text("按钮").TextSize(16),
                                         new Button(ctx)
                                             .Text("圆角按钮")
-                                            .BackgroundColor(Colors.YellowGreen)
+                                            .BackgroundColor(Color.YellowGreen)
                                             .TextSize(16)
                                             .Radius(18),
                                         new Button(ctx)
@@ -90,15 +90,11 @@ public class Program
                                             .TextSize(16)
                                             .OnClick(v => v.Text += "."),
                                         new ImageButton(ctx)
-                                            .Source(Path.Combine(workDir, "assets", "mine.png"))
-                                            .BackgroundColor(Colors.YellowGreen)
-                                            .Width(48)
-                                            .Height(48)
-                                            .Invoke(view => view.SetScaleType(ScaleType.FitCenter)),
+                                            .Source(Path.Combine(workDir, "assets", "mine.png")).BackgroundColor(Color.YellowGreen).Width(48).Height(48).Invoke(view => view.SetScaleType(ScaleType.FitCenter)),
                                         //圆角
                                         new ImageButton(ctx)
                                             .Source(Path.Combine(workDir, "assets", "mine.png"))
-                                            .BackgroundColor(Colors.YellowGreen)
+                                            .BackgroundColor(Color.YellowGreen)
                                             .Width(48)
                                             .Height(48)
                                             .Radius(24)
@@ -110,7 +106,7 @@ public class Program
                                                 36,
                                                 36
                                             )
-                                            .BackgroundColor(Colors.YellowGreen)
+                                            .BackgroundColor(Color.YellowGreen)
                                             .Width(48)
                                             .Height(48),
                                         new Switch(ctx).Text("开关"),

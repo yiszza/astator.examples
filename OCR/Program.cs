@@ -2,7 +2,8 @@
 using System.IO;
 using Astator.Graphics;
 using Astator.Script;
-using Astator.ThirdParty.RapidOCR;
+using RapidOcrNet;
+using SkiaSharp;
 
 namespace OCR;
 
@@ -13,20 +14,47 @@ public class Program
     {
         try
         {
-            var clsPath = Path.Combine(workDir, "assets", "ch_ppocr_mobile_v2.0_cls_infer.onnx");
-            //var detPath = Path.Combine(workDir, "assets", "ch_PP-OCRv5_mobile_det.onnx");
-            //var recPath = Path.Combine(workDir, "assets", "ch_PP-OCRv5_rec_mobile_infer.onnx");
+            var clsPath = Path.Combine(
+                workDir,
+                "assets",
+                "ch_PP-LCNet_x0_25_textline_ori_cls_mobile.onnx"
+            );
 
-            var detPath = Path.Combine(workDir, "assets", "ch_PP-OCRv4_det_infer.onnx");
-            var recPath = Path.Combine(workDir, "assets", "ch_PP-OCRv4_rec_infer.onnx");
+            // var detPath = Path.Combine(workDir, "assets", "PP-OCRv6_det_tiny.onnx");
+            // var recPath = Path.Combine(workDir, "assets", "PP-OCRv6_rec_tiny.onnx");
 
-            var keysPath = Path.Combine(workDir, "assets", "ppocr_keys_v1.txt");
+            // var keysPath = Path.Combine(workDir, "assets", "ppocrv6_tiny_dict.txt");
+
+            // using var ocr = new RapidOcr();
+
+            // var v6 = RapidOcrModelSet.PPOCRv6Tiny with
+            // {
+            //     ClsModelPath = clsPath,
+            //     DetModelPath = detPath,
+            //     RecModelPath = recPath,
+            //     KeysPath = keysPath,
+            // };
+            // ocr.InitModels(v6);
+
+            var detPath = Path.Combine(workDir, "assets", "PP-OCRv6_det_small.onnx");
+            var recPath = Path.Combine(workDir, "assets", "PP-OCRv6_rec_small.onnx");
+
+            var keysPath = Path.Combine(workDir, "assets", "ppocrv6_dict.txt");
+
+            using var ocr = new RapidOcr();
+
+            var v6 = RapidOcrModelSet.PPOCRv6Small with
+            {
+                ClsModelPath = clsPath,
+                DetModelPath = detPath,
+                RecModelPath = recPath,
+                KeysPath = keysPath,
+            };
+            ocr.InitModels(v6);
+
             var testPngPath = Path.Combine(workDir, "assets", "test.png");
-
-            var ocr = new RapidOCRHelper(detPath, clsPath, recPath, keysPath);
-
-            var testImg = WrapImage.CreateFromFile(testPngPath);
-            var result = ocr.Detect(testImg);
+            var testImg = SKBitmap.Decode(testPngPath);
+            var result = ocr.Detect(testImg, RapidOcrOptions.Default);
 
             Console.WriteLine(result.StrRes);
         }

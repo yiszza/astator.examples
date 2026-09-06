@@ -4,24 +4,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Android.Animation;
 using Android.Content;
+using Android.Graphics;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Astator.Platform.Droid.Permissions;
-using Astator.Platform.Droid.Script;
-using Astator.Platform.Droid.UI;
-using Astator.Platform.Droid.UI.Base;
+using Astator.Permissions;
 using Astator.Script;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Platform;
+using Astator.UI;
+using Astator.UI.Base;
+using static Android.Views.View;
 using static Android.Views.ViewGroup;
 using static Android.Widget.ImageView;
+using Path = System.IO.Path;
 
 namespace SimpleFloaty;
 
 public class Program
 {
-    private static readonly TaskCompletionSource<bool> tcs = new();
+    private static readonly TaskCompletionSource<object> tcs = new();
     private static TemplateActivity activity;
     private static FloatyWindow menuFloaty;
     private static FloatyWindow subFloaty;
@@ -33,7 +33,7 @@ public class Program
     private static double downY;
 
     [EntryMethod]
-    public static async Task<bool> MainAsync(string workDir)
+    public static async Task<object> MainAsync(string workDir)
     {
         activity = await TemplateActivity.CreateAsync();
         var helper = PermissionHelper.CreateInstance(activity);
@@ -79,7 +79,7 @@ public class Program
         {
             subFloaty?.Dispose();
             menuFloaty?.Dispose();
-            tcs.SetResult(true);
+            tcs.SetResult(0);
         });
 
         return await tcs.Task;
@@ -90,14 +90,14 @@ public class Program
         var assetsDir = Path.Combine(workDir, "assets");
         var root = new FrameLayout(ctx)
             .Name("menuRoot")
-            .BackgroundColor(Colors.Transparent)
+            .BackgroundColor(Color.Transparent)
             .Children(
                 new ImageButton(ctx)
                     .Source(Path.Combine(assetsDir, "robot.png"))
                     .Width(48)
                     .Height(48)
                     .Radius(24)
-                    .BackgroundColor(Colors.YellowGreen)
+                    .BackgroundColor(Color.YellowGreen)
                     .OnTouch(OnMenuTouchListener)
                     .Invoke(view => view.SetScaleType(ScaleType.FitCenter))
             );
@@ -119,13 +119,13 @@ public class Program
         var assetsDir = Path.Combine(workDir, "assets");
         var root = new FrameLayout(ctx)
             .Name("subRoot")
-            .BackgroundColor(Colors.Transparent)
+            .BackgroundColor(Color.Transparent)
             .Visibility(ViewStates.Gone)
             .OnTouch(
                 (v, e) =>
                 {
                     if (
-                        e.Action == MotionEventActions.Outside
+                        e.Event.Action == MotionEventActions.Outside
                         && activity["subRoot"].Visibility == ViewStates.Visible
                     )
                     {
@@ -140,7 +140,7 @@ public class Program
                     .Width(48)
                     .Height(48)
                     .Radius(24)
-                    .BackgroundColor(Colors.YellowGreen)
+                    .BackgroundColor(Color.YellowGreen)
                     .OnClick(v => SwitchSubFloatyState())
                     .Invoke(view => view.SetScaleType(ScaleType.FitCenter)),
                 new ImageButton(ctx)
@@ -149,7 +149,7 @@ public class Program
                     .Width(48)
                     .Height(48)
                     .Radius(24)
-                    .BackgroundColor(Colors.YellowGreen)
+                    .BackgroundColor(Color.YellowGreen)
                     .OnClick(v =>
                     {
                         SwitchSubFloatyState();
@@ -162,7 +162,7 @@ public class Program
                     .Width(48)
                     .Height(48)
                     .Radius(24)
-                    .BackgroundColor(Colors.YellowGreen)
+                    .BackgroundColor(Color.YellowGreen)
                     .OnClick(v =>
                     {
                         SwitchSubFloatyState();
@@ -175,7 +175,7 @@ public class Program
                     .Width(48)
                     .Height(48)
                     .Radius(24)
-                    .BackgroundColor(Colors.YellowGreen)
+                    .BackgroundColor(Color.YellowGreen)
                     .OnClick(v =>
                     {
                         SwitchSubFloatyState();
@@ -188,7 +188,7 @@ public class Program
                     .Width(48)
                     .Height(48)
                     .Radius(24)
-                    .BackgroundColor(Colors.YellowGreen)
+                    .BackgroundColor(Color.YellowGreen)
                     .OnClick(v =>
                     {
                         SwitchSubFloatyState();
@@ -206,20 +206,20 @@ public class Program
         );
     }
 
-    private static void OnMenuTouchListener(ImageButton view, MotionEvent e)
+    private static void OnMenuTouchListener(ImageButton view, TouchEventArgs e)
     {
-        if (e.Action == MotionEventActions.Down)
+        if (e.Event.Action == MotionEventActions.Down)
         {
             var point = menuFloaty.GetPosition();
             floatyX = point.X;
             floatyY = point.Y;
-            downX = e.RawX;
-            downY = e.RawY;
+            downX = e.Event.RawX;
+            downY = e.Event.RawY;
         }
-        else if (e.Action == MotionEventActions.Move)
+        else if (e.Event.Action == MotionEventActions.Move)
         {
-            var offsetX = e.RawX - downX;
-            var offsetY = e.RawY - downY;
+            var offsetX = e.Event.RawX - downX;
+            var offsetY = e.Event.RawY - downY;
             if (!isMoving)
             {
                 if (Math.Abs(offsetX) < 25 && Math.Abs(offsetY) < 25)
@@ -233,7 +233,7 @@ public class Program
                 (int)view.Context.FromPixels(floatyY + offsetY)
             );
         }
-        else if (e.Action == MotionEventActions.Up)
+        else if (e.Event.Action == MotionEventActions.Up)
         {
             var width = Devices.Width;
 

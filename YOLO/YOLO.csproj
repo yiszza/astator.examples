@@ -6,8 +6,8 @@
     <SupportedOSPlatformVersion>26.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Astator" Version="1.0.2" />
-    <PackageReference Include="YoloSharp" Version="6.0.7" />
+    <PackageReference Include="Astator" Version="1.1.0" />
+    <PackageReference Include="YoloSharp" Version="6.1.0" />
   </ItemGroup>
   <ProjectExtensions>
     <Label>YOLO</Label>
@@ -15,6 +15,9 @@
     <Author>unknown</Author>
     <Version>1.0.0</Version>
     <Description>在这里填写关于脚本的描述</Description>
+    <IncludeArm64>true</IncludeArm64>
+    <IncludeX64>true</IncludeX64>
+    <IncludeOnnx>true</IncludeOnnx>
     <Obfuscator>
       <IsObfuscate>true</IsObfuscate>
       <RenameProperties>true</RenameProperties>
@@ -25,7 +28,7 @@
       <ReuseNames>true</ReuseNames>
       <UseUnicodeNames>true</UseUnicodeNames>
       <UseKoreanNames>false</UseKoreanNames>
-      <HideStrings>true</HideStrings>
+      <HideStrings>false</HideStrings>
     </Obfuscator>
   </ProjectExtensions>
 </Project>
