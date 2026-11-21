@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net10.0-android;</TargetFrameworks>
+    <TargetFrameworks>net11.0-android;</TargetFrameworks>
     <UseMaui>false</UseMaui>
     <SingleProject>true</SingleProject>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -8,7 +8,7 @@
     <SupportedOSPlatformVersion>26.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Astator" Version="1.1.0" />
+    <PackageReference Include="Astator" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ref\" />

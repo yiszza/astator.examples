@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0-android</TargetFramework>
+    <TargetFramework>net11.0-android</TargetFramework>
     <OutputType>Library</OutputType>
     <UseMaui>false</UseMaui>
     <SupportedOSPlatformVersion>26.0</SupportedOSPlatformVersion>
@@ -9,7 +9,7 @@
     <AndroidAsset Remove="Assets\home.svg" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Astator" Version="1.1.0" />
+    <PackageReference Include="Astator" Version="1.2.0" />
   </ItemGroup>
   <ProjectExtensions>
     <Label>UIShowcase</Label>

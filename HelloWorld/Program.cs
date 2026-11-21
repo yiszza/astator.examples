@@ -5,9 +5,11 @@ namespace HelloWorld;
 
 public class Program
 {
+
     [EntryMethod]
     public static void Main(string workDir)
     {
-        Console.WriteLine("Hello world");
+        Console.WriteLine("Hello World!");
+        
     }
 }

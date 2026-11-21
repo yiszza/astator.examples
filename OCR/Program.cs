@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Astator.Graphics;
 using Astator.Script;
-using RapidOcrNet;
+using Sdcb.SimdPaddleOCR;
 using SkiaSharp;
 
 namespace OCR;
@@ -10,7 +12,7 @@ namespace OCR;
 public class Program
 {
     [EntryMethod]
-    public static void Main(string workDir)
+    public static async Task MainAsync(string workDir)
     {
         try
         {
@@ -20,43 +22,33 @@ public class Program
                 "ch_PP-LCNet_x0_25_textline_ori_cls_mobile.onnx"
             );
 
-            // var detPath = Path.Combine(workDir, "assets", "PP-OCRv6_det_tiny.onnx");
-            // var recPath = Path.Combine(workDir, "assets", "PP-OCRv6_rec_tiny.onnx");
+            var detPath = Path.Combine(workDir, "assets", "PP-OCRv6_det_tiny.onnx");
+            var recPath = Path.Combine(workDir, "assets", "PP-OCRv6_rec_tiny.onnx");
+            var keysPath = Path.Combine(workDir, "assets", "ppocrv6_tiny_dict.txt");
 
-            // var keysPath = Path.Combine(workDir, "assets", "ppocrv6_tiny_dict.txt");
+            using PaddleOcrAll ocr = await PaddleOcrAll.LoadAsync(
+                detectionPath: detPath,
+                classificationPath: clsPath,
+                recognitionPath: recPath,
+                dictionaryPath: keysPath
+            );
 
-            // using var ocr = new RapidOcr();
+            var imgPath = Path.Combine(workDir, "assets", "test.png");
+            var image = WrapImage.CreateFromFile(imgPath);
 
-            // var v6 = RapidOcrModelSet.PPOCRv6Tiny with
-            // {
-            //     ClsModelPath = clsPath,
-            //     DetModelPath = detPath,
-            //     RecModelPath = recPath,
-            //     KeysPath = keysPath,
-            // };
-            // ocr.InitModels(v6);
+            var sw = Stopwatch.StartNew();
 
-            var detPath = Path.Combine(workDir, "assets", "PP-OCRv6_det_small.onnx");
-            var recPath = Path.Combine(workDir, "assets", "PP-OCRv6_rec_small.onnx");
+            PaddleOcrResult result = ocr.Run(
+                image.Data,
+                image.Width,
+                image.Height,
+                image.RowStride,
+                ImagePixelFormat.Rgba32
+            );
 
-            var keysPath = Path.Combine(workDir, "assets", "ppocrv6_dict.txt");
-
-            using var ocr = new RapidOcr();
-
-            var v6 = RapidOcrModelSet.PPOCRv6Small with
-            {
-                ClsModelPath = clsPath,
-                DetModelPath = detPath,
-                RecModelPath = recPath,
-                KeysPath = keysPath,
-            };
-            ocr.InitModels(v6);
-
-            var testPngPath = Path.Combine(workDir, "assets", "test.png");
-            var testImg = SKBitmap.Decode(testPngPath);
-            var result = ocr.Detect(testImg, RapidOcrOptions.Default);
-
-            Console.WriteLine(result.StrRes);
+            sw.Stop();
+            Console.WriteLine(result.Text);
+            Console.WriteLine($"识别耗时: {sw.ElapsedMilliseconds} ms");
         }
         catch (Exception ex)
         {
